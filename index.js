@@ -1,5 +1,6 @@
 require("dotenv").config();
 const express = require("express");
+const cors = require("cors");
 const app = express();
 const PORT = process.env.PORT;
 const mongoose = require("mongoose");
@@ -13,7 +14,9 @@ async function main() {
 }
 
 app.use(express.json());
-app.get("/home", async (req, res) => {
+app.use(express.urlencoded({ extended: true }));
+app.use(cors());
+app.post("/home", async (req, res) => {
 	await Staff.create({
 		firstName: "Sandra",
 		lastName: "Gonzales",
