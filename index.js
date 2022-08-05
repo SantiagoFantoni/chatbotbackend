@@ -18,7 +18,7 @@ app.get("/home", async (req, res) => {
 		firstName: "Sandra",
 		lastName: "Gonzales",
 	});
-	res.send("Hola");
+	res.json({ message: "Hola" });
 });
 
 app.listen(PORT, () => {
