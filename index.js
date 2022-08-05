@@ -23,16 +23,18 @@ app.post("/webhook", async (req, res) => {
 	console.log("Dialogflow Request body: " + JSON.stringify(req.body));
 
 	function welcome(agent) {
-		agent.add(`Welcome to my agent!`);
+		agent.add(`Hola soy tu asistente virtual, como puedo ayudarte?`);
 	}
 
 	function fallback(agent) {
-		agent.add(`I didn't understand`);
-		agent.add(`I'm sorry, can you try again?`);
+		agent.add(`Lo siento, no te entendí`);
+		agent.add(`Perdón, podrías repetirmelo?`);
 	}
 
-	function Agendar(agent) {
+	async function Agendar(agent) {
 		agent.add(`Cual es tu nombre?(desde el webhook)`);
+		let userData = await getUserData(Asistente);
+		console.log(userData);
 	}
 
 	let intentMap = new Map();
