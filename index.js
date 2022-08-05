@@ -13,7 +13,7 @@ async function main() {
 }
 
 app.use(express.json());
-app.get("/", async (req, res) => {
+app.get("/home", async (req, res) => {
 	await Staff.create({
 		firstName: "Sandra",
 		lastName: "Gonzales",
