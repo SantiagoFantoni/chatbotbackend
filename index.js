@@ -16,7 +16,7 @@ async function main() {
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
-app.post("/home", async (req, res) => {
+app.post("/", async (req, res) => {
 	await Staff.create({
 		firstName: "Sandra",
 		lastName: "Gonzales",
