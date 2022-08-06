@@ -33,8 +33,7 @@ app.post("/webhook", async (req, res) => {
 
 	async function Agendar(agent) {
 		agent.add(`Cual es tu nombre?(desde el webhook)`);
-		let userData = await getUserData(Asistente);
-		console.log(userData);
+		console.log(req.body);
 	}
 
 	let intentMap = new Map();
