@@ -36,7 +36,7 @@ module.exports = function (req, res) {
 				rawPayload: true,
 			})
 		);
-		agent.add(`Estamos ubicados en 18 de julio 1234, esquina Mercedes.`);
+		agent.add(`Estamos ubicados en 18 de julio 1234, esquina Yi.`);
 	}
 
 	async function Agendar(agent) {
