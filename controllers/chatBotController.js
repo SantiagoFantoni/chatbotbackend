@@ -1,21 +1,10 @@
-const { WebhookClient } = require("dialogflow-fulfillment");
+const { WebhookClient, Payload } = require("dialogflow-fulfillment");
+
 const User = require("../models/User");
 const Service = require("../models/Service");
 
-// async function seeder() {
-// 	await Service.create({ Name: "Manicura", Price: 460 });
-// 	await Service.create({ Name: "Corte", Price: 950 });
-// 	await Service.create({ Name: "Depilacion", Price: 750 });
-// 	await Service.create({ Name: "Teñido", Price: 800 });
-// 	await Service.create({ Name: "Cejas", Price: 320 });
-// 	await Service.create({ Name: "Brushing", Price: 870 });
-// }
-// seeder();
-
 module.exports = function (req, res) {
 	const agent = new WebhookClient({ request: req, response: res });
-	// console.log("Dialogflow Request headers: " + JSON.stringify(req.headers));
-	// console.log("Dialogflow Request body: " + JSON.stringify(req.body));
 
 	function welcome(agent) {
 		agent.add(
@@ -26,6 +15,28 @@ module.exports = function (req, res) {
 	function fallback(agent) {
 		agent.add(`Lo siento, no te entendí`);
 		agent.add(`Perdón, podrías repetirmelo?`);
+	}
+	//No muestra la imagen en la Web pero si en DialogFlow.
+	function Ubicacion(agent) {
+		const payloadData = {
+			richContent: [
+				[
+					{
+						type: "image",
+						rawUrl:
+							"https://www.javea.com/wp-content/uploads/2018/11/fachada-vanguardia-peluqueria-766x507.jpg",
+						accessibilityText: "Buidling",
+					},
+				],
+			],
+		};
+		agent.add(
+			new Payload(agent.UNSPECIFIED, payloadData, {
+				sendAsMessage: true,
+				rawPayload: true,
+			})
+		);
+		agent.add(`Estamos ubicados en 18 de julio 1234, esquina Mercedes.`);
 	}
 
 	async function Agendar(agent) {
@@ -65,6 +76,7 @@ module.exports = function (req, res) {
 	let intentMap = new Map();
 	intentMap.set("Default Welcome Intent", welcome);
 	intentMap.set("Default Fallback Intent", fallback);
+	intentMap.set("Ubicacion", Ubicacion);
 	intentMap.set("Agendar", Agendar);
 	intentMap.set("ListadoServicios", Listado);
 	intentMap.set("FinDeAgendaPositiva", Positiva);
